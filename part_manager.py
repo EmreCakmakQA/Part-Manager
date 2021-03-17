@@ -2,10 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from db import Database
 
-# Instantiate Database
 db = Database('store.db')
-
-# Functions
 
 
 def populate_list():
@@ -16,32 +13,56 @@ def populate_list():
 
 def add_item():
     if part_text.get() == '' or customer_text.get() == '' or retailer_text.get() == '' or price_text.get() == '':
-        messagebox.showerror(
-            'Required Fields', 'Do not leave any empty fields!')
+        messagebox.showerror('Required Fields', 'Please include all fields')
         return
     db.insert(part_text.get(), customer_text.get(),
               retailer_text.get(), price_text.get())
     parts_list.delete(0, END)
     parts_list.insert(END, (part_text.get(), customer_text.get(),
-                      retailer_text.get(), price_text.get()))
+                            retailer_text.get(), price_text.get()))
+    clear_text()
     populate_list()
 
 
+def select_item(event):
+    try:
+        global selected_item
+        index = parts_list.curselection()[0]
+        selected_item = parts_list.get(index)
+
+        part_entry.delete(0, END)
+        part_entry.insert(END, selected_item[1])
+        customer_entry.delete(0, END)
+        customer_entry.insert(END, selected_item[2])
+        retailer_entry.delete(0, END)
+        retailer_entry.insert(END, selected_item[3])
+        price_entry.delete(0, END)
+        price_entry.insert(END, selected_item[4])
+    except IndexError:
+        pass
+
+
 def remove_item():
-    print('Remove')
+    db.remove(selected_item[0])
+    clear_text()
+    populate_list()
 
 
 def update_item():
-    print('Update')
+    db.update(selected_item[0], part_text.get(), customer_text.get(),
+              retailer_text.get(), price_text.get())
+    populate_list()
 
 
 def clear_text():
-    print('Clear Text')
+    part_entry.delete(0, END)
+    customer_entry.delete(0, END)
+    retailer_entry.delete(0, END)
+    price_entry.delete(0, END)
 
 
-# Create A Window Object
+# Create window object
 app = Tk()
-
 
 # Part
 part_text = StringVar()
@@ -75,19 +96,18 @@ price_entry.grid(row=1, column=3)
 parts_list = Listbox(app, height=8, width=50, border=0)
 parts_list.grid(row=3, column=0, columnspan=3, rowspan=6, pady=20, padx=20)
 
-# Scrollbar
+# Create scrollbar
 scrollbar = Scrollbar(app)
 scrollbar.grid(row=3, column=3)
 
-# Set scrollbar to list box
+# Set scroll to listbox
 parts_list.configure(yscrollcommand=scrollbar.set)
 scrollbar.configure(command=parts_list.yview)
 
 # Bind select
-#parts_list.bind('<<ListboxSelect>>', select_item)
+parts_list.bind('<<ListboxSelect>>', select_item)
 
-
-# Buttons - Add, Remove, Update, Clear
+# Buttons
 add_btn = Button(app, text='Add Part', width=12, command=add_item)
 add_btn.grid(row=2, column=0, pady=20)
 
@@ -100,13 +120,17 @@ update_btn.grid(row=2, column=2)
 clear_btn = Button(app, text='Clear Input', width=12, command=clear_text)
 clear_btn.grid(row=2, column=3)
 
-
-# Window Dimensions
 app.title('Part Manager')
 app.geometry('700x350')
 
-# Populate Data
+# Populate data
 populate_list()
 
-# Start Program
+# Start program
 app.mainloop()
+
+
+# To create an executable, install pyinstaller and run
+# '''
+# pyinstaller --onefile --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' part_manager.py
+# '''
