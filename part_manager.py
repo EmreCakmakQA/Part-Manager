@@ -1,10 +1,16 @@
 from tkinter import *
+from db import Database
+
+# Instantiate Database
+db = Database('store.db')
 
 # Functions
 
 
 def populate_list():
-    print('Populate')
+    parts_list.delete(0, END)
+    for row in db.fetch():
+        parts_list.insert(END, row)
 
 
 def add_item():

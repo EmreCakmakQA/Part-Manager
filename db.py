@@ -33,9 +33,13 @@ class Database:
         self.conn.close()
 
 
-db = Database('store.db')  # database name 'store.db'
-db.insert("8GB DDR4 RAM", "I.P Freely", "Argos", "130")
-db.insert("NVDIA 3080 GPU", "Maya Normousbutt", "Currys", "700")
-db.insert("INTEL I7-4790K CPU", "Ben Dover", "PC World", "250")
-db.insert("24 Inch 120Hz ASUS Monitor", "Oliver Klozoff", "eBay", "500")
-db.insert("Gaming Mouse ROG ASUS", "Mike Rotch", "Amazon", "85")
+# # Initialising DB
+# db = Database('store.db')  # database name 'store.db'
+
+# # Inserting data in DB:
+# db.insert("8GB DDR4 RAM", "I.P Freely", "Argos", "130")
+# db.insert("NVDIA 3080 GPU", "Maya Normousbutt", "Currys", "700")
+# db.insert("INTEL I7-4790K CPU", "Ben Dover", "PC World", "250")
+# db.insert("24 Inch 120Hz ASUS Monitor", "Oliver Klozoff", "eBay", "500")
+# db.insert("Gaming Mouse ROG ASUS", "Mike Rotch", "Amazon", "85")
+# db.insert("Sony Playstation 5 Pro 2TB", "M. Ray Chakmac", "Amazon", "485")
