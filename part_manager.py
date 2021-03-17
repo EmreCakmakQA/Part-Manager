@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from db import Database
 
 # Instantiate Database
@@ -14,6 +15,10 @@ def populate_list():
 
 
 def add_item():
+    if part_text.get() == '' or customer_text.get() == '' or retailer_text.get() == '' or price_text.get() == '':
+        messagebox.showerror(
+            'Required Fields', 'Do not leave any empty fields!')
+        return
     db.insert(part_text.get(), customer_text.get(),
               retailer_text.get(), price_text.get())
     parts_list.delete(0, END)
@@ -77,6 +82,9 @@ scrollbar.grid(row=3, column=3)
 # Set scrollbar to list box
 parts_list.configure(yscrollcommand=scrollbar.set)
 scrollbar.configure(command=parts_list.yview)
+
+# Bind select
+#parts_list.bind('<<ListboxSelect>>', select_item)
 
 
 # Buttons - Add, Remove, Update, Clear
