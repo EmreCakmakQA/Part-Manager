@@ -1,5 +1,28 @@
 from tkinter import *
 
+# Functions
+
+
+def populate_list():
+    print('Populate')
+
+
+def add_item():
+    print('Add')
+
+
+def remove_item():
+    print('Remove')
+
+
+def update_item():
+    print('Update')
+
+
+def clear_text():
+    print('Clear Text')
+
+
 # Create A Window Object
 app = Tk()
 
@@ -33,14 +56,38 @@ price_entry = Entry(app, textvariable=part_text)
 price_entry.grid(row=1, column=3)
 
 # Parts List (Listbox)
-parts_list = Listbox(app, height=8, width=50)
+parts_list = Listbox(app, height=8, width=50, border=0)
 parts_list.grid(row=3, column=0, columnspan=3, rowspan=6, pady=20, padx=20)
+
+# Scrollbar
+scrollbar = Scrollbar(app)
+scrollbar.grid(row=3, column=3)
+
+# Set scrollbar to list box
+parts_list.configure(yscrollcommand=scrollbar.set)
+scrollbar.configure(command=parts_list.yview)
+
+
+# Buttons - Add, Remove, Update, Clear
+add_btn = Button(app, text='Add Part', width=12, command=add_item)
+add_btn.grid(row=2, column=0, pady=20)
+
+remove_btn = Button(app, text='Remove Part', width=12, command=remove_item)
+remove_btn.grid(row=2, column=1)
+
+update_btn = Button(app, text='Update Part', width=12, command=update_item)
+update_btn.grid(row=2, column=2)
+
+clear_btn = Button(app, text='Clear Input', width=12, command=clear_text)
+clear_btn.grid(row=2, column=3)
 
 
 # Window Dimensions
 app.title('Part Manager')
 app.geometry('700x350')
 
+# Populate Data
+populate_list()
 
 # Start Program
 app.mainloop()
