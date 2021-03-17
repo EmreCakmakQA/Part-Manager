@@ -34,7 +34,7 @@ price_entry.grid(row=1, column=3)
 
 # Parts List (Listbox)
 parts_list = Listbox(app, height=8, width=50)
-parts_list.grid(row=3)
+parts_list.grid(row=3, column=0, columnspan=3, rowspan=6, pady=20, padx=20)
 
 
 # Window Dimensions
